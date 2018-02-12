@@ -44,7 +44,7 @@ class PurchaseView extends Backbone.View
     e.preventDefault()
     @openLoginModal()
 
-  openLoginModal: (copy) ->
+  openLoginModal: (copy) ->  # TODO: #1 see how this and sibling purchase_signup_form.coffee work
     mediator.trigger 'open:auth',
       mode: 'login'
       redirectTo: @artwork.href + '/checkout'
@@ -59,7 +59,7 @@ class PurchaseView extends Backbone.View
 # Signup
   # Submit
 
-  submitSignupForm: (form, options) ->
+  submitSignupForm: (form, options) -> # TODO #2
     # Validate both forms before moving on.
     # Call 'forIsSubmitting' on both forms to disable them both while request is in-flight.
     signupValid = @signupForm.validateForm()

@@ -112,6 +112,11 @@ var trackViewSignup = function () {
   analytics.track('Viewed sign up options')
 }
 
+/* TODO: handle analytics:
+* - intent?
+* - submission & success? are these user actions for analytics?
+*/
+
 analyticsHooks.on('mediator:open:auth', function (options) {
   if (options.mode === 'signup') trackViewSignup()
 

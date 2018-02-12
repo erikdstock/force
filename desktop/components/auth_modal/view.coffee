@@ -34,6 +34,9 @@ module.exports = class AuthModalView extends ModalView
 
     { @destination, @successCallback } = options
     @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
+
+    @personalize = if (options.personalize?) options.personalize else '/personalize' ## need to add redirectTo, account for other personalize routes?
+    
     @preInitialize options
 
     super
@@ -47,7 +50,7 @@ module.exports = class AuthModalView extends ModalView
     @templateData = _.extend {
       context: @context
       copy: @renderCopy(options.copy)
-      redirectTo: switch @state.get 'mode'
+      redirectTo: switch @state.get 'mode' # TODO: untangle this
         when 'login' then @redirectTo or location.pathname
         when 'signup' then @redirectTo or '/personalize'
         else @redirectTo or '/'
