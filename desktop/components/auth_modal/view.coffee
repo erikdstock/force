@@ -31,12 +31,12 @@ module.exports = class AuthModalView extends ModalView
 
   initialize: (options) ->
     return if isEigen.checkWith options
-
+    # Temporary gatekeeper warning
+    console.error('AuthModal created without correct entrypoint') unless options.viaEntrypoint
     { @destination, @successCallback } = options
-    @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
+    { @postLoginRedirectTo, @postSignupRedirectTo } = options
+    # @redirectTo = encodeURIComponent(sanitizeRedirect(options.redirectTo)) if options.redirectTo
 
-    @personalize = if (options.personalize?) options.personalize else '/personalize' ## need to add redirectTo, account for other personalize routes?
-    
     @preInitialize options
 
     super
@@ -50,10 +50,11 @@ module.exports = class AuthModalView extends ModalView
     @templateData = _.extend {
       context: @context
       copy: @renderCopy(options.copy)
-      redirectTo: switch @state.get 'mode' # TODO: untangle this
-        when 'login' then @redirectTo or location.pathname
-        when 'signup' then @redirectTo or '/personalize'
-        else @redirectTo or '/'
+      redirectTo: switch @state.get 'mode'
+        when 'login' then @postLoginRedirectTo
+        when 'signup' then @postSignupRedirectTo
+        when 'register' then @postSignupRedirectTo # I think this should be added...
+        else @postLoginRedirectTo or '/'
     }, options?.userData
 
     @listenTo @state, 'change:mode', @reRender

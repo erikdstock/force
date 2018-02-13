@@ -10,6 +10,7 @@ acquire = require '../../lib/acquire.coffee'
 helpers = require './helpers.coffee'
 metaphysics = require '../../../../../lib/metaphysics.coffee'
 template = -> require('./templates/index.jade') arguments...
+authModalEntry = require '../../../../components/auth_modal/index.coffee'
 
 LOT_STANDING_MAX_POLLS = 10
 LOT_STANDING_POLL_INTERVAL = 1000
@@ -26,6 +27,7 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     'change .js-artwork-auction-max-bid': 'setMaxBid'
 
   initialize: ({ @data }) -> #
+    console.log("ArtworkAuctionView...")
     # Defer until next tick. This really just gets the sequence right for
     # testing to work. This doesn't feel like a great justification, though.
     setTimeout (=> @updateBidLabel LOT_STANDING_MAX_POLLS), 0
@@ -79,8 +81,9 @@ module.exports = class ArtworkAuctionView extends Backbone.View
     form = new Form $form: @$('.js-artwork-auction-bid')
 
     if not CURRENT_USER?
-      return new AuthModalView
-        width: '500px',
+      return authModalEntry
+        view: AuthModalView
+        width: '500px'
         mode: 'register'
         copy: 'Sign up to bid'
         redirectTo: form.action()

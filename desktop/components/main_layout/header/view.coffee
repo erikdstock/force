@@ -15,6 +15,7 @@ CurrentUser = require '../../../models/current_user.coffee'
 Cookies = require '../../cookies/index.coffee'
 MobileHeaderView = require './mobile_header_view.coffee'
 bundleTemplate = -> require('./templates/bundles.jade') arguments...
+authModalEntry = require '../../../components/auth_modal/index.coffee'
 
 module.exports = class HeaderView extends Backbone.View
   events:
@@ -26,6 +27,7 @@ module.exports = class HeaderView extends Backbone.View
     'blur #main-layout-search-bar-container': 'unhighlightSearch'
 
   initialize: ->
+    console.log("loaded header", authModalEntry)
     @currentUser = CurrentUser.orNull()
     @checkForNotifications()
     @mobileHeaderView = new MobileHeaderView
@@ -102,7 +104,9 @@ module.exports = class HeaderView extends Backbone.View
     if options.mode is 'signup' and sd.ARTIST_PAGE_CTA_ENABLED
       mediator.trigger 'clickHeaderAuth'
       return
-    @modal = new AuthModalView _.extend({ width: '500px' }, options)
+    @modal = authModalEntry(
+      _.extend({view: AuthModalView, width: '500px' }, options)
+      )
 
   signup: (e) ->
     e.preventDefault()

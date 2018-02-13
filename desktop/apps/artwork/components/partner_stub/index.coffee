@@ -1,11 +1,13 @@
 InquireViaPhoneModalView = require '../inquire_via_phone/index.coffee'
+signupViewEntry = require '../../../../components/auth_modal/index.coffee'
 
 module.exports = ($el) ->
   $el
     .find '.js-artwork-partner-stub-inquire-via-phone'
     .click (e) ->
       e.preventDefault()
-      @modal = new InquireViaPhoneModalView
+      @modal = signupViewEntry
+        view: InquireViaPhoneModalView
         width: '500px'
         context: 'show phone number'
         copy:
