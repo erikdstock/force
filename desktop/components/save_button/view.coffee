@@ -3,6 +3,7 @@ Backbone = require 'backbone'
 mediator = require '../../lib/mediator.coffee'
 analyticsHooks = require '../../lib/analytics_hooks.coffee'
 { modelNameAndIdToLabel } = require '../../lib/analytics_helpers.coffee'
+requireUser = require '../../components/auth_modal/index.coffee'
 
 module.exports = class SaveButton extends Backbone.View
   events:
@@ -30,7 +31,9 @@ module.exports = class SaveButton extends Backbone.View
 
   toggle: (e) ->
     unless @saved
-      mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to save artworks' }
+      console.log('heyy')
+      requireUser mode: 'register', copy: 'Sign up to saveeee Artworks', backdrop: false
+      # mediator.trigger 'open:auth', { mode: 'register', copy: 'Sign up to save artworks' }
       return false
 
     trackedProperties = {

@@ -16,7 +16,7 @@ modalDefaults =
   transition: 'fade'
 
 module.exports = (options) ->
-  console.log('hmmm even this isn\'t working 🤔 - ok now it is 😎')
+  # console.log('hmmm even this isn\'t working 🤔 - ok now it is 😎')
   View = options.view || AuthModalView
   currentLocation = location.pathname
 
