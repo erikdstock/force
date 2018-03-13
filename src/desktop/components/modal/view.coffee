@@ -116,7 +116,7 @@ module.exports = class ModalView extends Backbone.View
     # Fade in
     _.defer => @$el.attr 'data-state', 'open'
 
-    require('../auth_modal/react')
+    # require('../auth_modal/react')
 
   renderInner: =>
     @$body = @$('.modal-body')
