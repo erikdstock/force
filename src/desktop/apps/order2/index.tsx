@@ -1,3 +1,4 @@
+import React from 'react'
 import express from 'express'
 import { App } from './Components/App'
 import { Head } from './Components/Head'
@@ -9,6 +10,7 @@ app.set('views', `${__dirname}/Components`)
 
 app.get('/order2', async (_req, res) => {
   try {
+    const data = {} // TODO
     const layout = await renderLayout({
       basePath: __dirname,
       layout: '../../components/main_layout/templates/blank.jade',
@@ -17,7 +19,7 @@ app.get('/order2', async (_req, res) => {
       },
       blocks: {
         head: Head,
-        body: App,
+        body: () => <App orderData={data} />,
       },
       locals: {
         assetPackage: 'order2',

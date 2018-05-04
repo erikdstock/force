@@ -3,7 +3,9 @@ import styled from 'styled-components'
 import { hot } from 'react-hot-loader'
 import { OrderForm } from '@artsy/reaction/dist/Components/Forms/OrderForm'
 
-interface Props {}
+interface Props {
+  orderData: any
+}
 
 export const App = hot(module)(
   class extends Component<Props> {
