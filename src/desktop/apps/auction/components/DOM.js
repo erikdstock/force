@@ -1,3 +1,4 @@
+import AcceptConditionsOfSaleModal from 'desktop/apps/auction_support/client/accept_conditions_of_sale_modal.coffee'
 import ConfirmRegistrationModal from 'desktop/components/credit_card/client/confirm_registration.coffee'
 import PropTypes from 'prop-types'
 import mediator from 'desktop/lib/mediator.coffee'
@@ -36,31 +37,36 @@ class DOM extends Component {
 
   addEventListeners() {
     this.$body = this.$('body')
-    this.$body.on('click', '.artsy-checkbox', scrollToTop)
+    this.$body.find('.Sidebar').on('click', '.artsy-checkbox', scrollToTop)
     this.$registerBtn = this.$body.find('.js-register-button')
-    this.$registerBtn.on('click', this.handleRegisterBtnClick)
+    this.$registerBtn.on('click', this.handleRegister)
   }
 
   removeEventListeners() {
     this.$body.off('click')
-    this.$registerBtn.off('click', this.handleRegisterBtnClick)
+    this.$registerBtn.off('click', this.handleRegister)
   }
 
-  handleRegisterBtnClick = (event) => {
-    if (!this.props.user) {
-      event.preventDefault()
-
+  handleRegister = event => {
+    const { user, auction, me } = this.props
+    if (!user) {
       mediator.trigger('open:auth', {
         mode: 'register',
         redirectTo: this.$(event.target).attr('href'),
         signupIntent: 'register to bid',
       })
     }
+    if (me.has_qualified_credit_cards) {
+      this.showAcceptConditions()
+    } else {
+      window.location.href = auction.registerUrl()
+    }
   }
 
+  // TODO: Confirm user is registered for sale,
+  //  else start registration flow via this.handleRegister
   maybeShowRegistration() {
     const { auction, user } = this.props
-
     if (user) {
       if (location.pathname.match('/confirm-registration')) {
         new ConfirmRegistrationModal({
@@ -70,14 +76,26 @@ class DOM extends Component {
     }
   }
 
+  // TODO: also support a link
+  showAcceptConditions() {
+    console.log('cos')
+    const { auction, user } = this.props
+    if (user) {
+      new AcceptConditionsOfSaleModal({
+        auction,
+      })
+    }
+  }
+
   render() {
     return this.props.children
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   auction: state.app.auction,
   user: state.app.user,
+  me: state.app.me,
 })
 
 export default connect(mapStateToProps)(DOM)

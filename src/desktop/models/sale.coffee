@@ -31,7 +31,7 @@ module.exports = class Sale extends Backbone.Model
   buyersPremiumUrl: ->
     "#{@href()}/buyers-premium"
 
-  registerUrl: (redirectUrl) ->
+  registerUrl: (redirectUrl, hasCC) ->
     url = "/auction-registration/#{@id}"
     url += "?redirect_uri=#{redirectUrl}" if redirectUrl
     url

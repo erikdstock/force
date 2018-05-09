@@ -13,7 +13,7 @@ registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
     error: res.backboneError
     success: (creditCards) ->
-      if creditCards.length > 0
+      if (creditCards.length > 0 and req.query['accepted-conditions'] == 'true')
         req.user.createBidder
           saleId: sale.get('id')
           error: res.backboneError
