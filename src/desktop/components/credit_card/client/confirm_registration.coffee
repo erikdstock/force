@@ -19,7 +19,6 @@ module.exports = class ConfirmRegistrationModal extends ModalView
     _.extend @templateData, paddleNumber: @user.get('paddle_number')
     super width: '510px'
 
-  
   postRender: =>
     @isLoading()
     @user.fetchBidderForAuction @auction,
