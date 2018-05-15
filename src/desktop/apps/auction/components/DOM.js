@@ -5,7 +5,6 @@ import mediator from 'desktop/lib/mediator.coffee'
 import scrollToTop from 'desktop/apps/auction/utils/scrollToTop'
 import { Component } from 'react'
 import { connect } from 'react-redux'
-import { consolidateStreamedStyles } from 'styled-components'
 
 class DOM extends Component {
   static propTypes = {
@@ -20,6 +19,7 @@ class DOM extends Component {
   $registerBtn = null
 
   componentDidMount() {
+    console.log('cdm')
     const FastClick = require('fastclick')
 
     // removes 300ms delay
@@ -30,7 +30,10 @@ class DOM extends Component {
     this.$ = require('jquery')
     this.addEventListeners()
     this.maybeShowConfirmRegistrationModal()
+    console.log('before')
+
     this.maybeStartRegistrationFlow()
+    console.log('after')
   }
 
   componentWillUnmount() {
@@ -73,9 +76,8 @@ class DOM extends Component {
     }
   }
 
-  // TODO: Confirm user is registered for sale,
-  //  else start registration flow via this.handleRegister
   maybeShowConfirmRegistrationModal() {
+    console.log('maybe show confirm registration...')
     const { auction, user } = this.props
     if (user) {
       if (location.pathname.match('/confirm-registration')) {

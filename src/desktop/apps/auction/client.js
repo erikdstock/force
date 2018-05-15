@@ -24,6 +24,7 @@ export default () => {
     artworkBrowser: bootstrapData.artworkBrowser,
   })
 
+  console.log('client.js')
   // Start app
   ReactDOM.hydrate(
     <App store={store} templateComponents={templateComponents} />,
