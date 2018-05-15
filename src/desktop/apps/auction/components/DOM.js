@@ -19,7 +19,6 @@ class DOM extends Component {
   $registerBtn = null
 
   componentDidMount() {
-    console.log('cdm')
     const FastClick = require('fastclick')
 
     // removes 300ms delay
@@ -30,10 +29,8 @@ class DOM extends Component {
     this.$ = require('jquery')
     this.addEventListeners()
     this.maybeShowConfirmRegistrationModal()
-    console.log('before')
 
     this.maybeStartRegistrationFlow()
-    console.log('after')
   }
 
   componentWillUnmount() {
@@ -69,15 +66,12 @@ class DOM extends Component {
   }
 
   maybeStartRegistrationFlow() {
-    console.log('checking registration flow...')
     if (this.props.user && location.pathname.match('/registration')) {
-      console.log('registration flow')
       this.handleRegister()
     }
   }
 
   maybeShowConfirmRegistrationModal() {
-    console.log('maybe show confirm registration...')
     const { auction, user } = this.props
     if (user) {
       if (location.pathname.match('/confirm-registration')) {

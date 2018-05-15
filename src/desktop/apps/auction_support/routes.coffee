@@ -14,6 +14,8 @@ registerOrRender = (sale, req, res, next) ->
     error: res.backboneError
     success: (creditCards) ->
       if (creditCards.length > 0)
+        # If the user did not accept conditions explicitly
+        # (through the AcceptConditionsOfSaleModal) redirect to the auction flow
         if req.query['accepted-conditions'] != 'true'
           res.redirect sale.registrationFlowUrl()
         else
@@ -41,7 +43,7 @@ registerOrRender = (sale, req, res, next) ->
           yearRange: order.getYearRange()
 
 @auctionRegistration = (req, res, next) ->
-  # TODO: This doesn't happen here any more?
+  # TODO: This doesn't happen here any more... but it could?
   unless req.user
     return res.redirect "/log_in?redirect_uri=/auction-registration/#{req.params.id}"
 
