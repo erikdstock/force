@@ -5,6 +5,7 @@ import mediator from 'desktop/lib/mediator.coffee'
 import scrollToTop from 'desktop/apps/auction/utils/scrollToTop'
 import { Component } from 'react'
 import { connect } from 'react-redux'
+import { consolidateStreamedStyles } from 'styled-components'
 
 class DOM extends Component {
   static propTypes = {
@@ -28,7 +29,8 @@ class DOM extends Component {
 
     this.$ = require('jquery')
     this.addEventListeners()
-    this.maybeShowRegistration()
+    this.maybeShowConfirmRegistrationModal()
+    this.maybeStartRegistrationFlow()
   }
 
   componentWillUnmount() {
@@ -52,7 +54,7 @@ class DOM extends Component {
     if (!user) {
       mediator.trigger('open:auth', {
         mode: 'register',
-        redirectTo: this.$(event.target).attr('href'),
+        redirectTo: auction.registrationFlowUrl(),
         signupIntent: 'register to bid',
       })
     }
@@ -63,9 +65,17 @@ class DOM extends Component {
     }
   }
 
+  maybeStartRegistrationFlow() {
+    console.log('checking registration flow...')
+    if (this.props.user && location.pathname.match('/registration')) {
+      console.log('registration flow')
+      this.handleRegister()
+    }
+  }
+
   // TODO: Confirm user is registered for sale,
   //  else start registration flow via this.handleRegister
-  maybeShowRegistration() {
+  maybeShowConfirmRegistrationModal() {
     const { auction, user } = this.props
     if (user) {
       if (location.pathname.match('/confirm-registration')) {
@@ -78,7 +88,6 @@ class DOM extends Component {
 
   // TODO: also support a link
   showAcceptConditions() {
-    console.log('cos')
     const { auction, user } = this.props
     if (user) {
       new AcceptConditionsOfSaleModal({

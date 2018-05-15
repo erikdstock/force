@@ -35,6 +35,6 @@ module.exports = class AcceptConditionsOfSaleModal extends ModalView
       window.location.href = url
 
   close: (event) ->
-    # replaceModalTriggerPath = location.pathname.replace('/accept-conditions-of-sale', '')
+    replaceModalTriggerPath = location.pathname.replace('/register', '')
     history.replaceState({}, document.title, replaceModalTriggerPath)
     super

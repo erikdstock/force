@@ -13,23 +13,26 @@ registerOrRender = (sale, req, res, next) ->
   req.user.fetchCreditCards
     error: res.backboneError
     success: (creditCards) ->
-      if (creditCards.length > 0 and req.query['accepted-conditions'] == 'true')
-        req.user.createBidder
-          saleId: sale.get('id')
-          error: res.backboneError
-          success: (bidder) ->
-            analytics = new Analytics(res.locals.sd.SEGMENT_WRITE_KEY)
-            analytics.track(
-              event: 'Registration submitted',
-              userId: req.user.get('id'),
-              properties: {
-                auction_slug: sale.get('id'),
-                auction_state: sale.get('auction_state'),
-                user_id: req.user.get('id'),
-                bidder_id: bidder.get('id')
-              }
-            )
-            res.redirect sale.registrationSuccessUrl()
+      if (creditCards.length > 0)
+        if req.query['accepted-conditions'] != 'true'
+          res.redirect sale.registrationFlowUrl()
+        else
+          req.user.createBidder
+            saleId: sale.get('id')
+            error: res.backboneError
+            success: (bidder) ->
+              analytics = new Analytics(res.locals.sd.SEGMENT_WRITE_KEY)
+              analytics.track(
+                event: 'Registration submitted',
+                userId: req.user.get('id'),
+                properties: {
+                  auction_slug: sale.get('id'),
+                  auction_state: sale.get('auction_state'),
+                  user_id: req.user.get('id'),
+                  bidder_id: bidder.get('id')
+                }
+              )
+              res.redirect sale.registrationSuccessUrl()
       else
         order = new Order()
         res.render 'registration',
@@ -38,6 +41,7 @@ registerOrRender = (sale, req, res, next) ->
           yearRange: order.getYearRange()
 
 @auctionRegistration = (req, res, next) ->
+  # TODO: This doesn't happen here any more?
   unless req.user
     return res.redirect "/log_in?redirect_uri=/auction-registration/#{req.params.id}"
 
