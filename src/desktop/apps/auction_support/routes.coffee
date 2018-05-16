@@ -36,12 +36,14 @@ registerOrRender = (sale, req, res, next) ->
               )
               res.redirect sale.registrationSuccessUrl()
       else
+        # Render the full registration + credit card form
         order = new Order()
         res.render 'registration',
           sale: sale
           monthRange: order.getMonthRange()
           yearRange: order.getYearRange()
 
+# /auction-registration/:slug
 @auctionRegistration = (req, res, next) ->
   # TODO: This doesn't happen here any more... but it could?
   unless req.user

@@ -15,7 +15,7 @@ routes =
   /sale/.*
   ^/auction/[^/]+/?$
   /auction/.*/confirm-registration
-  /auction/.*/registration
+  /auction/.*/registration-flow
   ''': require('../apps/auction/client.js').default
 
   '''

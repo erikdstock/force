@@ -26,7 +26,7 @@ module.exports = class Sale extends Backbone.Model
       "/auction/#{@id}"
 
   registrationFlowUrl: ->
-    "#{@href()}/registration"
+    "#{@href()}/registration-flow"
 
   registrationSuccessUrl: ->
     "#{@href()}/confirm-registration"

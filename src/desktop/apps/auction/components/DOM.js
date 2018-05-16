@@ -29,7 +29,6 @@ class DOM extends Component {
     this.$ = require('jquery')
     this.addEventListeners()
     this.maybeShowConfirmRegistrationModal()
-
     this.maybeStartRegistrationFlow()
   }
 
@@ -50,39 +49,41 @@ class DOM extends Component {
   }
 
   handleRegister = event => {
-    const { user, auction, me } = this.props
-    if (!user) {
+    const { auction, me } = this.props
+    // if there is no user, log in and redirect to this flow
+    if (!me) {
       mediator.trigger('open:auth', {
         mode: 'register',
         redirectTo: auction.registrationFlowUrl(),
         signupIntent: 'register to bid',
       })
-    }
-    if (me.has_qualified_credit_cards) {
+
+      // If the user already has a CC, show accept conditions
+      // (which redirects to auction-registration/:slug)
+    } else if (me.has_qualified_credit_cards) {
       this.showAcceptConditions()
+
+      // Redirect to credit card registration form
     } else {
       window.location.href = auction.registerUrl()
     }
   }
 
   maybeStartRegistrationFlow() {
-    if (this.props.user && location.pathname.match('/registration')) {
+    if (location.pathname.match('/registration-flow')) {
       this.handleRegister()
     }
   }
 
   maybeShowConfirmRegistrationModal() {
     const { auction, user } = this.props
-    if (user) {
-      if (location.pathname.match('/confirm-registration')) {
-        new ConfirmRegistrationModal({
-          auction,
-        })
-      }
+    if (user && location.pathname.match('/confirm-registration')) {
+      new ConfirmRegistrationModal({
+        auction,
+      })
     }
   }
 
-  // TODO: also support a link
   showAcceptConditions() {
     const { auction, user } = this.props
     if (user) {
