@@ -21,7 +21,7 @@ export default function MeQuery(sale_id, live = true) {
           }
           sale_id
           highest_bid {
-          display
+            display
           }
           sale {
             live_start_at

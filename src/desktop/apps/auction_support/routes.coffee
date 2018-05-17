@@ -48,7 +48,6 @@ registerOrRender = (sale, req, res, next) ->
   # TODO: This doesn't happen here any more... but it could?
   unless req.user
     return res.redirect "/log_in?redirect_uri=/auction-registration/#{req.params.id}"
-
   new Sale(id: req.params.id).fetch
     error: res.backboneError
     success: (sale) ->

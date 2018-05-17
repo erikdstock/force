@@ -32,7 +32,7 @@ module.exports = class AcceptConditionsOfSaleModal extends ModalView
   handleRegister: =>
     if (@validateAcceptConditions())
       url = @auction.registerUrl() + '?accepted-conditions=true'
-      window.location.href = url
+      window.location.assign(url)
 
   close: (event) ->
     replaceModalTriggerPath = location.pathname.replace('/registration-flow', '')

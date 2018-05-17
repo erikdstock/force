@@ -50,7 +50,7 @@ class DOM extends Component {
 
   handleRegister = event => {
     const { auction, me } = this.props
-    // if there is no user, log in and redirect to this flow
+    // If there is no user, log in and redirect to this flow
     if (!me) {
       mediator.trigger('open:auth', {
         mode: 'register',
