@@ -27,7 +27,7 @@ export async function index(req, res, next) {
   try {
     const { sale } = await metaphysics({
       query: SaleQuery(saleId),
-      req: req,
+      req,
     })
 
     res.locals.sd.AUCTION = sale
@@ -38,7 +38,7 @@ export async function index(req, res, next) {
     try {
       ;({ articles } = await metaphysics({
         query: ArticlesQuery(sale._id),
-        req: req,
+        req,
       }))
     } catch (error) {
       console.error('(apps/auction/routes.js) Error fetching Articles', error)
@@ -62,7 +62,7 @@ export async function index(req, res, next) {
     if (!isEcommerceSale) {
       ;({ me } = await metaphysics({
         query: MeQuery(sale.id),
-        req: req,
+        req,
       }))
     }
 
@@ -153,14 +153,14 @@ export async function redirectLive(req, res, next) {
   try {
     const { sale } = await metaphysics({
       query: SaleQuery(req.params.id),
-      req: req,
+      req,
     })
     const isLiveOpen = get(sale, 'is_live_open')
 
     if (isLiveOpen) {
       const { me } = await metaphysics({
         query: MeQuery(req.params.id),
-        req: req,
+        req,
       })
 
       const qualifiedForBidding = get(me, 'bidders.0.qualified_for_bidding')
