@@ -36,5 +36,6 @@ module.exports = class AcceptConditionsOfSaleModal extends ModalView
 
   close: (event) ->
     replaceModalTriggerPath = location.pathname.replace('/registration-flow', '')
+    console.log(location.pathname)
     history.replaceState({}, document.title, replaceModalTriggerPath)
     super
