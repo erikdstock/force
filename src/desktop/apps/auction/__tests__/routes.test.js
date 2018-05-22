@@ -1,13 +1,13 @@
-import * as routes from 'desktop/apps/auction/routes'
 import Backbone from 'backbone'
 import CurrentUser from 'desktop/models/current_user.coffee'
 import sinon from 'sinon'
 import { fabricate } from 'antigravity'
 
 const rewire = require('rewire')('../routes')
+const routes = rewire
 
 // FIXME: Race conditions in tests here. See failing tests: https://circleci.com/gh/artsy/force/5461#tests/containers/2
-xdescribe('#index', () => {
+describe('#index', () => {
   let req
   let res
   let next
@@ -71,7 +71,7 @@ xdescribe('#index', () => {
   })
 })
 
-xdescribe('#redirectLive', () => {
+describe('#redirectLive', () => {
   let req
   let res
   let next
@@ -91,7 +91,7 @@ xdescribe('#redirectLive', () => {
     Backbone.sync.restore()
   })
 
-  it('redirects on confirm if the auction is live and bidder is qualified', done => {
+  it('redirects on confirm if the auction is live and bidder is qualified', async () => {
     const auctionQueries = {
       sale: {
         id: 'foo',
@@ -117,14 +117,8 @@ xdescribe('#redirectLive', () => {
       sinon.stub().returns(Promise.resolve(auctionQueries))
     )
 
-    res = {
-      redirect: url => {
-        url.should.containEql('/foo/login')
-      },
-    }
-    routes.redirectLive(req, res, next).then(() => {
-      done()
-    })
+    await routes.redirectLive(req, res, next)
+    res.redirect.args[0][0].should.containEql('/foo/login')
   })
 
   it('does not redirect if bidder is not qualified', async () => {
