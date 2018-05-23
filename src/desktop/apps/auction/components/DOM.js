@@ -19,6 +19,7 @@ class DOM extends Component {
   $registerBtn = null
 
   componentDidMount() {
+    console.log('in CDM')
     const FastClick = require('fastclick')
 
     // removes 300ms delay
@@ -49,6 +50,8 @@ class DOM extends Component {
   }
 
   handleRegister = event => {
+    console.log('in handleRegister')
+
     const { auction, me } = this.props
     // If there is no user, log in and redirect to this flow
     if (!me) {
@@ -57,6 +60,10 @@ class DOM extends Component {
         redirectTo: auction.registrationFlowUrl(),
         signupIntent: 'register to bid',
       })
+
+      // If the user is already registered, just ignore this and fix the url.
+    } else if (me.bidders[0]) {
+      history.replaceState({}, document.title, auction.href())
 
       // If the user already has a CC, show accept conditions
       // (which redirects to auction-registration/:slug)

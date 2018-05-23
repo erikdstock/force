@@ -12,7 +12,13 @@ import { isEmpty } from 'underscore'
 import { merge, cloneDeep } from 'lodash'
 import { mount, render, shallow } from 'enzyme'
 
-export default function renderTestComponent ({ Component, data = {}, props = {}, options = {}, store = {} }) {
+export default function renderTestComponent({
+  Component,
+  data = {},
+  props = {},
+  options = {},
+  store = {},
+}) {
   const reduxData = merge(cloneDeep(bootstrap), data)
   const auctionModel = new Auction(reduxData.app.auction)
   const auctionArticles = new Articles(reduxData.app.articles)
@@ -50,6 +56,6 @@ export default function renderTestComponent ({ Component, data = {}, props = {},
 
   return {
     store,
-    wrapper
+    wrapper,
   }
 }
