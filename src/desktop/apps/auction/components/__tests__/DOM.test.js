@@ -5,8 +5,8 @@ import DOM from '../DOM'
 const rewire = require('rewire')('../Layout')
 const Layout = rewire.default
 
-xdescribe.only('DOM Interactions', () => {
-  describe.only('.handleRegister', () => {
+describe('DOM Interactions', () => {
+  xdescribe('.handleRegister', () => {
     it('opens the login modal if there is no user', () => {
       rewire.__set__('ArtworkBrowser', () => <div />)
       const { wrapper } = renderTestComponent({
