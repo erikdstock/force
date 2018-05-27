@@ -6,7 +6,6 @@ import { fabricate } from 'antigravity'
 const rewire = require('rewire')('../routes')
 const routes = rewire
 
-// FIXME: Race conditions in tests here. See failing tests: https://circleci.com/gh/artsy/force/5461#tests/containers/2
 describe('#index', () => {
   let req
   let res

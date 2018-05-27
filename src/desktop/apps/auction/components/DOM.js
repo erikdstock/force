@@ -19,7 +19,6 @@ class DOM extends Component {
   $registerBtn = null
 
   componentDidMount() {
-    console.log('in CDM')
     const FastClick = require('fastclick')
 
     // removes 300ms delay
@@ -50,8 +49,6 @@ class DOM extends Component {
   }
 
   handleRegister = event => {
-    console.log('in handleRegister')
-
     const { auction, me } = this.props
     // If there is no user, log in and redirect to this flow
     if (!me) {
