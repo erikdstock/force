@@ -15,12 +15,18 @@ describe('#index', () => {
     sinon.stub(Backbone, 'sync')
     req = {
       body: {},
-      params: { id: 'foobar' },
+      params: {
+        id: 'foobar',
+      },
       user: new CurrentUser(fabricate('user')),
     }
     res = {
-      app: { get: sinon.stub().returns('components/page') },
-      locals: { sd: {} },
+      app: {
+        get: sinon.stub().returns('components/page'),
+      },
+      locals: {
+        sd: {},
+      },
       redirect: sinon.stub(),
       render: sinon.stub(),
       send: sinon.stub(),
@@ -32,7 +38,7 @@ describe('#index', () => {
     Backbone.sync.restore()
   })
 
-  it('renders the index with the correct variables', () => {
+  it('renders the index with the correct variables', done => {
     const auctionQueries = {
       sale: {
         id: 'foo',
@@ -59,14 +65,21 @@ describe('#index', () => {
     )
     rewire.__set__('renderLayout', () => '<html />')
     rewire.__set__('actions', {
-      fetchArtworksByFollowedArtists: () => ({ type: 'GET_ARTWORKS_SUCCESS' }),
-      fetchArtworks: () => ({ type: 'GET_ARTWORKS_SUCCESS' }),
+      fetchArtworksByFollowedArtists: () => ({
+        type: 'GET_ARTWORKS_SUCCESS',
+      }),
+      fetchArtworks: () => ({
+        type: 'GET_ARTWORKS_SUCCESS',
+      }),
     })
 
     // FIXME: Need to write more robust output test
-    routes.index(req, res, next).then(() => {
-      res.send.args[0][0].should.eql('<html />')
-    })
+    routes
+      .index(req, res, next)
+      .then(() => {
+        res.send.args[0][0].should.eql('<html />')
+      })
+      .finally(done)
   })
 })
 
@@ -79,10 +92,14 @@ describe('#redirectLive', () => {
     sinon.stub(Backbone, 'sync')
     req = {
       body: {},
-      params: { id: 'foobar' },
+      params: {
+        id: 'foobar',
+      },
       user: new CurrentUser(fabricate('user')),
     }
-    res = { redirect: sinon.stub() }
+    res = {
+      redirect: sinon.stub(),
+    }
     next = sinon.stub()
   })
 
