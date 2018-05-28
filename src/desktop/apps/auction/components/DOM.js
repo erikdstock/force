@@ -27,6 +27,7 @@ class DOM extends Component {
     }
 
     this.$ = require('jquery')
+    console.log(this.$)
     this.addEventListeners()
     this.maybeShowConfirmRegistrationModal()
     this.maybeStartRegistrationFlow()
@@ -65,6 +66,7 @@ class DOM extends Component {
       // If the user already has a CC, show accept conditions
       // (which redirects to auction-registration/:slug)
     } else if (me.has_qualified_credit_cards) {
+      console.log('this is working...')
       this.showAcceptConditions()
 
       // Redirect to credit card registration form
@@ -109,3 +111,8 @@ const mapStateToProps = state => ({
 })
 
 export default connect(mapStateToProps)(DOM)
+
+// Helpers
+export const test = {
+  DOM,
+}

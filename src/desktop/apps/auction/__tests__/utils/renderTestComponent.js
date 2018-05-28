@@ -1,4 +1,8 @@
-import 'jsdom-global/register'
+// Include JSDom if running from Mocha. Jest automatically injects.
+if (!navigator.userAgent.includes('jsdom')) {
+  require('jsdom-global/register')
+}
+
 import Articles from 'desktop/collections/articles.coffee'
 import Auction from 'desktop/models/auction.coffee'
 import CurrentUser from 'desktop/models/current_user.coffee'
