@@ -5,20 +5,24 @@ import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTest
 import { cloneDeep } from "lodash"
 import { followedArtistSaleArtworks } from "../artwork_browser/__tests__/fixtures/followedArtistSaleArtworks"
 import { promotedSaleArtworks } from "../artwork_browser/__tests__/fixtures/promotedSaleArtworks"
+import Layout from "../Layout"
 
-const rewire = require("rewire")("../Layout")
-const Layout = rewire.default
+// const rewire = require("rewire")("../Layout")
+// const Layout = rewire.default
 
-xdescribe("<Layout />", () => {
-  let resetRewire
+describe("<Layout />", () => {
+  // let resetRewire
+  //
+  // beforeEach(() => {
+  //   // resetRewire = rewire.__set__("Banner", () => "")
+  //   resetRewire = () => {
+  //     console.log("rewire doesn't work")
+  //   }
+  // })
 
-  beforeEach(() => {
-    resetRewire = rewire.__set__("Banner", () => "")
-  })
-
-  afterEach(() => {
-    resetRewire()
-  })
+  // afterEach(() => {
+  //   resetRewire()
+  // })
 
   it("default auction with no user", () => {
     const { wrapper } = renderTestComponent({
@@ -355,7 +359,7 @@ xdescribe("<Layout />", () => {
 
   describe("auction with no artworks", () => {
     describe("an auction promo", () => {
-      it("does not show the footer at all", () => {
+      xit("does not show the footer at all", () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: "render" },
@@ -438,7 +442,7 @@ xdescribe("<Layout />", () => {
     })
 
     describe("articles, auction promo", () => {
-      it("shows the footer but not the extra footer item", () => {
+      xit("shows the footer but not the extra footer item", () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: "render" },
@@ -478,7 +482,7 @@ xdescribe("<Layout />", () => {
     })
 
     describe("articles, not auction promo", () => {
-      it("shows the articles and the extra footer item", () => {
+      xit("shows the articles and the extra footer item", () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: "render" },
@@ -647,7 +651,7 @@ xdescribe("<Layout />", () => {
     }
 
     describe("desktop", () => {
-      it("removes top timer component", () => {
+      xit("removes top timer component", () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: "render" },
@@ -695,7 +699,7 @@ xdescribe("<Layout />", () => {
       const mobileData = cloneDeep(data)
       mobileData.app.isMobile = true
 
-      it("removes top timer component", () => {
+      xit("removes top timer component", () => {
         const { wrapper } = renderTestComponent({
           Component: Layout,
           options: { renderMode: "render" },

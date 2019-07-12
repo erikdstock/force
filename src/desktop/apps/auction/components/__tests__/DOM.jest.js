@@ -1,3 +1,4 @@
+/* eslint-disable import/first */
 import { test } from "../DOM"
 const { DOM } = test
 

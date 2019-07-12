@@ -1,6 +1,7 @@
 import renderTestComponent from "desktop/apps/auction/__tests__/utils/renderTestComponent"
 import { ConfirmRegistrationModal } from "../ConfirmRegistrationModal"
 import { act } from "react-dom/test-utils"
+
 describe("Confirm Registration Modal", () => {
   beforeAll(() => {
     jest.spyOn(history, "replaceState")
